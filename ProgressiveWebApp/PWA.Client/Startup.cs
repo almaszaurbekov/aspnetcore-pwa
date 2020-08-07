@@ -29,6 +29,7 @@ namespace PWA.Client
 
             // System configurations
             services.AddControllersWithViews();
+            services.AddProgressiveWebApp();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, 
