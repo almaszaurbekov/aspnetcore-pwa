@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using PWA.Client.Models;
 using PWA.Common.Configurations;
 using PWA.Infrastructure.Identity;
+using System;
 using System.Threading.Tasks;
 
 namespace PWA.Client.Controllers
@@ -15,14 +19,19 @@ namespace PWA.Client.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly AccountConfiguration _configuration;
+        private readonly IMemoryCache _cache;
+        private readonly IHttpContextAccessor _accessor;
 
         public AccountController(ILogger<AccountController> logger, AccountConfiguration configuration,
-             UserManager<User> userManager, SignInManager<User> signInManager)
+             UserManager<User> userManager, SignInManager<User> signInManager, IMemoryCache cache,
+             IHttpContextAccessor accessor)
         {
             _logger = logger;
             _configuration = configuration;
             _userManager = userManager;
             _signInManager = signInManager;
+            _cache = cache;
+            _accessor = accessor;
         }
 
         [HttpGet]
@@ -57,6 +66,7 @@ namespace PWA.Client.Controllers
 
             if (result.Succeeded)
             {
+                _cache.Set(User.Identity.Name, user);
                 _logger.LogInformation("User logged in");
                 return RedirectToAction("Index", "Application");
             }
@@ -71,6 +81,13 @@ namespace PWA.Client.Controllers
                 AddModelError(_configuration.IncorrectPasswordMessage);
                 return View(model);
             }
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Settings()
+        {
+            return View();
         }
 
         private void AddModelError(string errorMessage) => ModelState.AddModelError(string.Empty, errorMessage);
