@@ -26,6 +26,7 @@ namespace PWA.Client
             services.AddIdentity();
             services.AddCookieSettings();
             services.AddAccountConfiguration(_configuration);
+            services.AddCacheKeys(_configuration);
 
             // System configurations
             services.AddControllersWithViews();

@@ -19,12 +19,13 @@ namespace PWA.Client.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly AccountConfiguration _configuration;
-        private readonly IMemoryCache _cache;
         private readonly IHttpContextAccessor _accessor;
+        private readonly IMemoryCache _cache;
+        private readonly CacheKeys _cacheKeys;
 
         public AccountController(ILogger<AccountController> logger, AccountConfiguration configuration,
              UserManager<User> userManager, SignInManager<User> signInManager, IMemoryCache cache,
-             IHttpContextAccessor accessor)
+             IHttpContextAccessor accessor, CacheKeys cacheKeys)
         {
             _logger = logger;
             _configuration = configuration;
@@ -32,6 +33,7 @@ namespace PWA.Client.Controllers
             _signInManager = signInManager;
             _cache = cache;
             _accessor = accessor;
+            _cacheKeys = cacheKeys;
         }
 
         [HttpGet]
@@ -66,7 +68,7 @@ namespace PWA.Client.Controllers
 
             if (result.Succeeded)
             {
-                _cache.Set(User.Identity.Name, user);
+                _cache.Set(_cacheKeys.CurrentUser, user);
                 _logger.LogInformation("User logged in");
                 return RedirectToAction("Index", "Application");
             }
