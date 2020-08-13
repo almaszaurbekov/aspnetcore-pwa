@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PWA.Infrastructure.Identity.Migrations
 {
-    public partial class Initial : Migration
+    public partial class UsersAndRolesGeneration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -150,6 +150,33 @@ namespace PWA.Infrastructure.Identity.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "d6a8058c-d231-441b-a75f-6f468bfbf76a", "b171e387-2315-42f8-8255-9304bf56dad0", "Administrator", "ADMINISTRATOR" },
+                    { "76bf8de3-e4b3-4b5a-98e8-d52a901226b6", "003ed01f-2860-4161-86ac-3b4990f63a16", "User", "USER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "2570cebf-25a8-49ed-be0a-3b28c26278be", 0, "28f7d24a-879a-45c5-9b8f-7470d07018de", "foxychmoxy@admin", true, false, null, "FOXYCHMOXY@ADMIN", "FOXY.ADMIN", "AQAAAAEAACcQAAAAEMF6mcJm2w8egVZZcYAa6/CUiTXP6wK5bE/LuBsFZ5v/euAn0IEcUZrEtgsXcAcjKg==", null, false, "a9a927f6-5c8f-4814-9108-4e3fafbc4895", false, "foxy.admin" },
+                    { "74239187-19ab-4b09-9d91-559371ebfb0d", 0, "f6fa5b25-f933-4783-9c5b-c44e36a1e916", "foxychmoxy@user", true, false, null, "FOXYCHMOXY@user", "FOXY.USER", "AQAAAAEAACcQAAAAELf3G6PzLYeF40ja7bwE2HEGC0I3nJP5ADbG5+olHlXJtpnbFHQCBtiCn0SxI25+3A==", null, false, "c1994f50-88d2-4e95-b65d-2869d271d887", false, "foxy.user" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[,]
+                {
+                    { "2570cebf-25a8-49ed-be0a-3b28c26278be", "d6a8058c-d231-441b-a75f-6f468bfbf76a" },
+                    { "74239187-19ab-4b09-9d91-559371ebfb0d", "76bf8de3-e4b3-4b5a-98e8-d52a901226b6" }
                 });
 
             migrationBuilder.CreateIndex(

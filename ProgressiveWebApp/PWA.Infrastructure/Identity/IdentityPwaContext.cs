@@ -10,6 +10,7 @@ namespace PWA.Infrastructure.Identity
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            IdentityContextSeed.Initialize(modelBuilder);
             base.OnModelCreating(modelBuilder);
         }
     }

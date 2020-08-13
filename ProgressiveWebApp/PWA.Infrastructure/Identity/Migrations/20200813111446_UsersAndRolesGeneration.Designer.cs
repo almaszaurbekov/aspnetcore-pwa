@@ -10,8 +10,8 @@ using PWA.Infrastructure.Identity;
 namespace PWA.Infrastructure.Identity.Migrations
 {
     [DbContext(typeof(IdentityPwaContext))]
-    [Migration("20200807115945_Initial")]
-    partial class Initial
+    [Migration("20200813111446_UsersAndRolesGeneration")]
+    partial class UsersAndRolesGeneration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,22 @@ namespace PWA.Infrastructure.Identity.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "d6a8058c-d231-441b-a75f-6f468bfbf76a",
+                            ConcurrencyStamp = "b171e387-2315-42f8-8255-9304bf56dad0",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "76bf8de3-e4b3-4b5a-98e8-d52a901226b6",
+                            ConcurrencyStamp = "003ed01f-2860-4161-86ac-3b4990f63a16",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -215,6 +231,40 @@ namespace PWA.Infrastructure.Identity.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "2570cebf-25a8-49ed-be0a-3b28c26278be",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "28f7d24a-879a-45c5-9b8f-7470d07018de",
+                            Email = "foxychmoxy@admin",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "FOXYCHMOXY@ADMIN",
+                            NormalizedUserName = "FOXY.ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMF6mcJm2w8egVZZcYAa6/CUiTXP6wK5bE/LuBsFZ5v/euAn0IEcUZrEtgsXcAcjKg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "a9a927f6-5c8f-4814-9108-4e3fafbc4895",
+                            TwoFactorEnabled = false,
+                            UserName = "foxy.admin"
+                        },
+                        new
+                        {
+                            Id = "74239187-19ab-4b09-9d91-559371ebfb0d",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f6fa5b25-f933-4783-9c5b-c44e36a1e916",
+                            Email = "foxychmoxy@user",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "FOXYCHMOXY@user",
+                            NormalizedUserName = "FOXY.USER",
+                            PasswordHash = "AQAAAAEAACcQAAAAELf3G6PzLYeF40ja7bwE2HEGC0I3nJP5ADbG5+olHlXJtpnbFHQCBtiCn0SxI25+3A==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "c1994f50-88d2-4e95-b65d-2869d271d887",
+                            TwoFactorEnabled = false,
+                            UserName = "foxy.user"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

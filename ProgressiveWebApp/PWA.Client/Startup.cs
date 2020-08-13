@@ -36,7 +36,7 @@ namespace PWA.Client
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, 
             UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
-            IdentityContextSeed.SeedData(userManager, roleManager).Wait();
+            //IdentityContextSeed.SeedData(userManager, roleManager).Wait();
 
             if (env.IsDevelopment())
             {
